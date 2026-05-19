@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  UserButton
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata: Metadata = {
   title: "CyberShield",
@@ -18,32 +13,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
-
     <ClerkProvider>
-
       <html lang="en">
-
-        <body>
-
-          <header className="fixed top-0 right-0 z-50 p-6 flex gap-4">
-
-            <SignInButton />
-
-            <SignUpButton />
-
-            <UserButton />
-
-          </header>
-
-          {children}
-
-        </body>
-
+        <body>{children}</body>
       </html>
-
     </ClerkProvider>
-
   );
 }
