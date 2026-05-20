@@ -8,7 +8,11 @@ export async function POST(req) {
 
   try {
 
+    console.log("API HIT");
+
     const body = await req.json();
+
+    console.log(body);
 
     const completion = await openai.chat.completions.create({
 
@@ -16,27 +20,23 @@ export async function POST(req) {
 
       messages: [
         {
-          role: "system",
-          content: "You are a helpful AI assistant for CyberShield."
-        },
-
-        {
           role: "user",
-          content: body.message
-        }
-      ]
+          content: body.message,
+        },
+      ],
     });
 
     return Response.json({
-      reply: completion.choices[0].message.content
+      reply: completion.choices[0].message.content,
     });
 
   } catch (error) {
 
+    console.log("OPENAI ERROR:");
     console.log(error);
 
     return Response.json({
-      reply: "AI failed to respond."
+      reply: "OpenAI failed.",
     });
   }
 }
