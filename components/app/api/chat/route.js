@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
@@ -10,32 +10,33 @@ export async function POST(req) {
 
     const body = await req.json();
 
-    const completion = await client.chat.completions.create({
+    const completion = await openai.chat.completions.create({
 
       model: "gpt-3.5-turbo",
 
       messages: [
         {
           role: "system",
-          content:
-            "You are an AI cybersecurity assistant for CyberShield.",
+          content: "You are a helpful AI assistant for CyberShield."
         },
 
         {
           role: "user",
-          content: body.message,
-        },
-      ],
+          content: body.message
+        }
+      ]
     });
 
     return Response.json({
-      reply: completion.choices[0].message.content,
+      reply: completion.choices[0].message.content
     });
 
   } catch (error) {
 
+    console.log(error);
+
     return Response.json({
-      reply: "Something went wrong.",
+      reply: "AI failed to respond."
     });
   }
 }
