@@ -1,208 +1,77 @@
 "use client";
 
-import { useEffect } from "react";
-
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-
-import Lenis from "lenis";
+import {
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 import Hero3D from "../components/Hero3D";
-import Features from "../components/Features";
-import Pricing from "../components/Pricing";
-import Testimonials from "../components/Testimonials";
-import Stats from "../components/Stats";
-
-import Cursor from "../components/Cursor";
-import Navbar from "../components/Navbar";
-import Particles from "../components/Particles";
-import ThemeToggle from "../components/ThemeToggle";
-
-import StorySection from "../components/StorySection";
-import AdvancedFeatures from "../components/AdvancedFeatures";
-import Glow from "../components/Glow";
-
-import SecuritySection from "../components/SecuritySection";
-import TrustBadges from "../components/TrustBadges";
-import FloatingCTA from "../components/FloatingCTA";
-
-import GridBackground from "../components/GridBackground";
-import LiveTicker from "../components/LiveTicker";
-
-import AIChatbot from "../components/AIChatbot";
-import DashboardPreview from "../components/DashboardPreview";
-
-import MotionSection from "../components/MotionSection";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-
-  useEffect(() => {
-
-    const lenis = new Lenis({
-      duration: 1,
-      smoothWheel: true,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
-    gsap.from(".hero-text", {
-      y: 80,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: "power3.out",
-    });
-
-    gsap.utils.toArray(".reveal").forEach((section: any) => {
-
-      gsap.from(section, {
-        scrollTrigger: {
-          trigger: section,
-          start: "top 85%",
-        },
-
-        y: 80,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-
-    });
-
-  }, []);
-
   return (
-    <>
+    <main className="min-h-screen bg-black text-white overflow-hidden">
 
-      <GridBackground />
-      <Particles />
-      <Glow />
+      {/* Clerk Auth Buttons */}
+      <div className="fixed top-5 right-5 z-50 flex gap-4">
 
-      <Cursor />
-      <Navbar />
-      <ThemeToggle />
-      <FloatingCTA />
-      <AIChatbot />
+        <SignInButton />
 
-      <main className="bg-black text-white overflow-hidden">
+        <SignUpButton />
 
-        {/* HERO */}
-        <section className="relative min-h-screen flex items-center justify-center px-6 md:px-16 overflow-hidden">
+        <UserButton />
 
-          {/* ORBS */}
-          <div className="absolute top-[-200px] left-[-200px] w-[500px] h-[500px] bg-green-400/10 blur-[100px] rounded-full" />
+      </div>
 
-          <div className="absolute bottom-[-200px] right-[-200px] w-[500px] h-[500px] bg-cyan-400/10 blur-[100px] rounded-full" />
+      {/* Hero Section */}
+      <section className="min-h-screen flex flex-col md:flex-row items-center justify-between px-10">
 
-          <div className="grid md:grid-cols-2 gap-20 items-center w-full max-w-7xl z-10">
+        {/* LEFT SIDE */}
+        <div className="z-10 max-w-2xl">
 
-            {/* LEFT */}
-            <div>
+          <h1 className="text-6xl md:text-8xl font-black leading-tight">
 
-              <div className="hero-text inline-block px-6 py-3 rounded-full border border-green-400/20 bg-green-400/10 text-green-400 text-sm mb-8 backdrop-blur-xl">
+            Cyber
+            <span className="text-green-400">
+              Shield
+            </span>
 
-                AI-Powered Enterprise Security
+          </h1>
 
-              </div>
+          <p className="mt-6 text-xl text-gray-400">
 
-              <h1 className="hero-text text-6xl md:text-8xl font-black leading-[0.95]">
+            Premium AI-powered cybersecurity platform
+            with futuristic UI, 3D visuals, and enterprise-grade protection.
 
-                Future of
-                <br />
+          </p>
 
-                <span className="text-green-400">
-                  Cyber Defense
-                </span>
+          <div className="flex gap-6 mt-10">
 
-              </h1>
+            <button className="bg-green-400 text-black px-8 py-4 rounded-2xl font-bold hover:scale-105 transition">
 
-              <p className="hero-text mt-10 text-xl text-gray-400 leading-relaxed max-w-2xl">
+              Get Started
 
-                Premium AI-driven cybersecurity platform designed for
-                startups and enterprises.
+            </button>
 
-              </p>
+            <button className="border border-green-400 px-8 py-4 rounded-2xl hover:bg-green-400 hover:text-black transition">
 
-              <div className="hero-text flex gap-6 mt-12 flex-wrap">
+              Learn More
 
-                <button className="bg-green-400 text-black px-10 py-5 rounded-2xl text-lg font-bold hover:scale-105 transition duration-300">
-
-                  Get Started
-
-                </button>
-
-                <button className="border border-white/10 bg-white/5 backdrop-blur-xl px-10 py-5 rounded-2xl text-lg hover:bg-white/10 transition duration-300">
-
-                  Watch Demo
-
-                </button>
-
-              </div>
-
-            </div>
-
-            {/* RIGHT */}
-            <div className="w-full h-[400px] md:h-[550px]">
-
-              <Hero3D />
-
-            </div>
+            </button>
 
           </div>
 
-        </section>
+        </div>
 
-        <LiveTicker />
+        {/* RIGHT SIDE 3D */}
+        <div className="w-full md:w-[500px] h-[500px]">
 
-        <section className="reveal">
-          <StorySection />
-        </section>
+          <Hero3D />
 
-        <section className="reveal">
-          <Stats />
-        </section>
+        </div>
 
-        <section className="reveal">
-          <Features />
-        </section>
+      </section>
 
-        <section className="reveal">
-          <AdvancedFeatures />
-        </section>
-
-        <section className="reveal">
-          <MotionSection />
-        </section>
-
-        <section className="reveal">
-          <DashboardPreview />
-        </section>
-
-        <section className="reveal">
-          <SecuritySection />
-        </section>
-
-        <section className="reveal">
-          <TrustBadges />
-        </section>
-
-        <section className="reveal">
-          <Pricing />
-        </section>
-
-        <section className="reveal">
-          <Testimonials />
-        </section>
-
-      </main>
-
-    </>
+    </main>
   );
 }
