@@ -8,35 +8,55 @@ export async function POST(req) {
 
   try {
 
-    console.log("API HIT");
+    const { message } = await req.json();
 
-    const body = await req.json();
-
-    console.log(body);
-
-    const completion = await openai.chat.completions.create({
+    const response = await openai.chat.completions.create({
 
       model: "gpt-3.5-turbo",
 
+      stream: true,
+
       messages: [
         {
-          role: "user",
-          content: body.message,
+          role: "system",
+          content: "You are CyberShield AI Assistant."
         },
-      ],
+
+        {
+          role: "user",
+          content: message
+        }
+      ]
     });
 
-    return Response.json({
-      reply: completion.choices[0].message.content,
+    const encoder = new TextEncoder();
+
+    const stream = new ReadableStream({
+
+      async start(controller) {
+
+        for await (const chunk of response) {
+
+          const text =
+            chunk.choices[0]?.delta?.content || "";
+
+          controller.enqueue(
+            encoder.encode(text)
+          );
+        }
+
+        controller.close();
+      }
     });
+
+    return new Response(stream);
 
   } catch (error) {
 
-    console.log("OPENAI ERROR:");
     console.log(error);
 
     return Response.json({
-      reply: "OpenAI failed.",
+      error: "Streaming failed"
     });
   }
 }
