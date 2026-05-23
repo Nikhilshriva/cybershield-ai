@@ -1,13 +1,12 @@
 "use client";
 
-import { supabase }
-from "../lib/supabase";
+import { supabase } from "../lib/supabase";
 
 export default function TestDB() {
 
   const addUser = async () => {
 
-    const { data, error } =
+    const { error } =
       await supabase
         .from("users")
         .insert([
@@ -17,16 +16,15 @@ export default function TestDB() {
           },
         ]);
 
-    console.log(data);
-    console.log(error);
-
     if (error) {
+
+      console.log(error);
 
       alert("Database Error ❌");
 
     } else {
 
-      alert("User Added Successfully 🚀");
+      alert("User Added 🚀");
     }
   };
 
@@ -34,7 +32,7 @@ export default function TestDB() {
 
     <button
       onClick={addUser}
-      className="bg-green-400 text-black px-8 py-4 rounded-2xl font-bold hover:scale-105 transition"
+      className="bg-green-400 text-black px-8 py-4 rounded-2xl font-bold"
     >
 
       Test Database
